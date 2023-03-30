@@ -24,9 +24,22 @@ void setup() {
   Serial.print("Setting AP (Access Point)…");
   WiFi.softAP(ssid, password);
 
-  IP = WiFi.softAPIP();
-  Serial.print("AP IP address: ");
-  Serial.println(IP);
+  // Set your Static IP address
+  IPAddress local_IP(192, 168, 1, 184);
+  // Set your Gateway IP address
+  IPAddress gateway(192, 168, 1, 1);
+
+  IPAddress subnet(255, 255, 0, 0);
+  IPAddress primaryDNS(8, 8, 8, 8);   //optional
+  IPAddress secondaryDNS(8, 8, 4, 4); //optional
+
+  if (!WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS)) {
+    Serial.println("STA Failed to configure");
+  }
+
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+
 
   server.on("/UTC_Time", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send_P(200, "text/plain", get_UTC_Time().to_string());
@@ -55,7 +68,7 @@ void loop() {
 
 // RESOURCES:
 // https://randomnerdtutorials.com/esp32-access-point-ap-web-server/#:~:text=ESP32%20IP%20Address,ESP32%20point%20will%20be%20printed.
-
+// https://randomnerdtutorials.com/esp32-static-fixed-ip-address-arduino-ide/ 
 
 
 // OTHER MISC RESOURCES THAT COULD BE USEFULL LATER:

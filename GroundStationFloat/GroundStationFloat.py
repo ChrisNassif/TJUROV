@@ -8,7 +8,7 @@ import time
 # 4. (optional) Make sure you can access the ESP32's signal by typing in [ESP32_IPADDRESS]/UTC_Time into google
 # 5. Run this script
  
-ESP32_IPADDRESS = ""
+ESP32_IPADDRESS = "192.168.1.184"
 
 def main():
 
